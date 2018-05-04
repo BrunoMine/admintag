@@ -1,6 +1,6 @@
 # admintag
 
-[Minetest Mod] Lets admin nametag in red color. And makes invisible the nametag of admin through command.
+[Minetest Mod] Lets admin nametag in red color. And makes invisible the nametag of player through command.
 
 ## Depends:
  * [lib_savelogs](https://github.com/Lunovox/lib_savelogs) (Optional)
