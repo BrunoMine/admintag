@@ -10,16 +10,34 @@ minetest.register_privilege("nametaginvisible",  {
 	give_to_singleplayer=false,
 })
 
+
+-- Server Tags
+modAdminTag.CustomTags = {}
+
+
 modAdminTag.setNametagColor = function(player)
 	if player and player:is_player() then --Verifica se o player esta online
 		local playername = player:get_player_name()
 		if type(modAdminTag.player_invisible[playername])=="boolean" and modAdminTag.player_invisible[playername]==true then
 			player:set_nametag_attributes({color={a=0,r=0,g=0,b=0}})
 		else
-			if minetest.get_player_privs(playername).server then
-				player:set_nametag_attributes({color=modAdminTag.nametagcolor_server})
-			else
-				player:set_nametag_attributes({color=modAdminTag.nametagcolor_normal})
+			
+			local playerprivs = minetest.get_player_privs(playername)
+			
+			local setted = false
+			for tag_priv,tag_color in pairs(modAdminTag.CustomTags) do
+				if playerprivs[tag_priv] then
+					setted = true
+					player:set_nametag_attributes({color=tag_color})
+					break
+				end
+			end
+			if setted == false then
+				if minetest.get_player_privs(playername).server then
+					player:set_nametag_attributes({color=modAdminTag.nametagcolor_server})
+				else
+					player:set_nametag_attributes({color=modAdminTag.nametagcolor_normal})
+				end
 			end
 		end
 	end
